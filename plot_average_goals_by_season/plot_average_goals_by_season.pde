@@ -3,11 +3,10 @@ Table avg_goals_by_season;
 void setup() {
   size(1000, 1000);
   avg_goals_by_season = loadTable("average_goals_by_season.csv", "header");
-  println(getHomeGoals(avg_goals_by_season));
-}
-
-void draw() {
   
+  float[] home_goals = getHomeGoals(avg_goals_by_season);
+  
+  drawHomeGoals(home_goals);
 }
 
 float[] getHomeGoals(Table avg_goals_by_season) {
@@ -27,4 +26,10 @@ float[] getHomeGoals(Table avg_goals_by_season) {
   
   // return the home_goals_array
   return home_goals;
+}
+
+void drawHomeGoals(float[] home_goals) {
+  for (int i = 0; i < home_goals.length; i++) {
+    rect(i * 50, 0, 40, home_goals[i] * 500);
+  }
 }

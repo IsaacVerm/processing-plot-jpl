@@ -8,7 +8,7 @@ void setup() {
   
   float[] home_goals = getHomeGoals(avg_goals_by_season);
   
-  drawHomeGoals(home_goals);
+  drawHomeGoals(home_goals, 50, 20, 100, window_height);
 }
 
 float[] getHomeGoals(Table avg_goals_by_season) {
@@ -30,10 +30,17 @@ float[] getHomeGoals(Table avg_goals_by_season) {
   return home_goals;
 }
 
-void drawHomeGoals(float[] home_goals, distance_between_bars, bar_width, y_margin) {
+void drawHomeGoals(float[] home_goals,
+                   int distance_between_bars,
+                   int bar_width,
+                   int y_margin, 
+                   int window_height) {
   rectMode(CORNERS);
   
   for (int i = 0; i < home_goals.length; i++) {
-    rect(i * 50, window_height - y_margin , i * distance_between_bars + bar_width, window_height - home_goals[i] * 500);
+    rect(i * 50,
+         window_height - y_margin ,
+         i * distance_between_bars + bar_width,
+         window_height - home_goals[i] * window_height/2);
   }
 }

@@ -1,14 +1,10 @@
-Table avg_goals_by_season;
-int window_width = 1000;
-int window_height = 1000;
-
 void setup() {
-  size(1000, 1000);
-  avg_goals_by_season = loadTable("average_goals_by_season.csv", "header");
+  size(700, 500);
+  Table avg_goals_by_season = loadTable("average_goals_by_season.csv", "header");
   
   float[] home_goals = getHomeGoals(avg_goals_by_season);
   
-  drawHomeGoals(home_goals, 50, 20, 100, window_height);
+  drawHomeGoals(home_goals, width, height);
 }
 
 float[] getHomeGoals(Table avg_goals_by_season) {
@@ -31,16 +27,26 @@ float[] getHomeGoals(Table avg_goals_by_season) {
 }
 
 void drawHomeGoals(float[] home_goals,
-                   int distance_between_bars,
-                   int bar_width,
-                   int y_margin, 
+                   int window_width,
                    int window_height) {
+  // define as 2 corners instead of corner + width/height
   rectMode(CORNERS);
   
+  // calculate variables needed for calculation corners
+  float bar_width = window_width / (home_goals.length * 3);
+  float max_home_goals = max(home_goals);
+  float zone_width = 3 * bar_width;
+  
+  // plot bars
   for (int i = 0; i < home_goals.length; i++) {
-    rect(i * 50,
-         window_height - y_margin ,
-         i * distance_between_bars + bar_width,
-         window_height - home_goals[i] * window_height/2);
+    float x_corner_one = i * zone_width;
+    float y_corner_one = window_height * 0.9;
+    float x_corner_two = i * zone_width + 2 * bar_width;
+    float y_corner_two = window_height - home_goals[i] * (window_height / ceil(max_home_goals));
+    
+    rect(x_corner_one,
+         y_corner_one,
+         x_corner_two,
+         y_corner_two);
   }
 }

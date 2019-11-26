@@ -4,7 +4,7 @@ void setup() {
   
   float[] home_goals = getHomeGoals(avg_goals_by_season);
   
-  drawHomeGoals(home_goals, width, height);
+  drawHomeGoals(home_goals);
 }
 
 float[] getHomeGoals(Table avg_goals_by_season) {
@@ -26,23 +26,23 @@ float[] getHomeGoals(Table avg_goals_by_season) {
   return home_goals;
 }
 
-void drawHomeGoals(float[] home_goals,
-                   int window_width,
-                   int window_height) {
+void drawHomeGoals(float[] home_goals) {
   // define as 2 corners instead of corner + width/height
   rectMode(CORNERS);
   
   // calculate variables needed for calculation corners
-  float bar_width = window_width / (home_goals.length * 3);
+  float bar_width = width / (home_goals.length * 3);
+  println("bar width is ", bar_width);
   float max_home_goals = max(home_goals);
   float zone_width = 3 * bar_width;
   
   // plot bars
   for (int i = 0; i < home_goals.length; i++) {
     float x_corner_one = i * zone_width;
-    float y_corner_one = window_height * 0.9;
-    float x_corner_two = i * zone_width + 2 * bar_width;
-    float y_corner_two = window_height - home_goals[i] * (window_height / ceil(max_home_goals));
+    float y_corner_one = height * 0.9;
+    float x_corner_two = i * zone_width + bar_width;
+    float y_corner_two = height - home_goals[i] * (height / ceil(max_home_goals));
+    println(x_corner_one, y_corner_one, x_corner_two, y_corner_two);
     
     rect(x_corner_one,
          y_corner_one,

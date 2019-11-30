@@ -29,6 +29,8 @@ float[] getHomeGoals(Table avg_goals_by_season) {
 void drawHomeGoals(float[] home_goals) {
   // define as 2 corners instead of corner + width/height
   rectMode(CORNERS);
+  fill(247, 118, 108);
+  noStroke();
   
   // calculate variables needed for calculation corners
   float bar_width = width / (home_goals.length * 3);

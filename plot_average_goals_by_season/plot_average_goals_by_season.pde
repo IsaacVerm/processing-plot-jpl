@@ -71,9 +71,9 @@ void drawGoals(float[] goals, String venue) {
         y_corner_two);
     } else if (venue.equals("home")) {
       rect(x_corner_one + bar_width, 
-        y_corner_one + bar_width, 
+        y_corner_one, 
         x_corner_two + bar_width, 
-        y_corner_two + bar_width);
+        y_corner_two);
     }
   }
 }

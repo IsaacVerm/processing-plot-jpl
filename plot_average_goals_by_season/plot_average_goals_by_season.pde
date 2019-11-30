@@ -43,6 +43,10 @@ float getZoneWidth(float bar_width) {
   return 3 * bar_width;
 }
 
+float getXCornerOne(int bar_index, float zone_width) {
+  return bar_index * zone_width;
+}
+
 void drawGoals(float[] goals, String venue) {
   // define as 2 corners instead of corner + width/height
   rectMode(CORNERS);
@@ -57,7 +61,7 @@ void drawGoals(float[] goals, String venue) {
 
   // plot bars
   for (int i = 0; i < goals.length; i++) {
-    float x_corner_one = i * zone_width;
+    float x_corner_one = getXCornerOne(i, zone_width);
     float y_corner_one = height * (1 - y_margin);
     float x_corner_two = i * zone_width + bar_width;
     float y_corner_two = height - goals[i] * (height / ceil(max_goals));

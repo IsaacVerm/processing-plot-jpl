@@ -4,7 +4,7 @@ void setup() {
   
   float[] home_goals = getGoalsVenue(avg_goals_by_season, "home");
   
-  drawHomeGoals(home_goals);
+  drawGoals(home_goals, "home");
 }
 
 float[] getGoalsVenue(Table avg_goals_by_season, String venue) {
@@ -25,10 +25,16 @@ float[] getGoalsVenue(Table avg_goals_by_season, String venue) {
   return venue_goals;
 }
 
-void drawHomeGoals(float[] home_goals) {
+void setColor(String venue) {
+    if (venue.equals("home")) {
+      fill(247, 118, 108);
+    }
+  }
+ 
+void drawGoals(float[] home_goals, String venue) {
   // define as 2 corners instead of corner + width/height
   rectMode(CORNERS);
-  fill(247, 118, 108);
+  setColor(venue); 
   noStroke();
   
   // calculate variables needed for calculation corners

@@ -35,16 +35,6 @@ void setColor(String venue) {
   }
 }
 
-int getPosition(String venue) {
-  if (venue.equals("home")) {
-    return 2;
-  } else if (venue.equals("away")) {
-    return 1;
-  }
-  return 0;
-}
-
-
 void drawGoals(float[] goals, String venue) {
   // define as 2 corners instead of corner + width/height
   rectMode(CORNERS);

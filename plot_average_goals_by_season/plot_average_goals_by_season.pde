@@ -32,7 +32,6 @@ void drawHomeGoals(float[] home_goals) {
   
   // calculate variables needed for calculation corners
   float bar_width = width / (home_goals.length * 3);
-  println("bar width is ", bar_width);
   float max_home_goals = max(home_goals);
   float zone_width = 3 * bar_width;
   float y_margin = 0.1;
@@ -43,7 +42,6 @@ void drawHomeGoals(float[] home_goals) {
     float y_corner_one = height * (1 - y_margin);
     float x_corner_two = i * zone_width + bar_width;
     float y_corner_two = height - home_goals[i] * (height / ceil(max_home_goals));
-    println(x_corner_one, y_corner_one, x_corner_two, y_corner_two);
     
     rect(x_corner_one,
          y_corner_one,

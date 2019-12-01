@@ -3,6 +3,7 @@ AwayGoalsBar away_goals_bar;
 Goals goals;
 Zone zone;
 XLabel xlabel;
+YLabels ylabels;
 
 void setup() {
   size(1200, 500);
@@ -32,7 +33,11 @@ void setup() {
     away_goals_bar.display();
     
     // draw x labels
-    xlabel = new XLabel(seasons[i], away_goals_bar.x_corner_one, 400);
+    xlabel = new XLabel(seasons[i], away_goals_bar.x_corner_one + zone.bar_width / 8, away_goals_bar.y_corner_one + height / 20);
     xlabel.display();
+    
+    // draw y labels
+    ylabels = new YLabels(max(goals.goals), zone.zone_width, bottom_margin);
+    ylabels.display();
   }
 }

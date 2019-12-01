@@ -16,6 +16,10 @@ class Goals {
     goals = float(goals_file.getStringColumn("goals"));
     venues = goals_file.getStringColumn("venue");
   }
+  
+  int getGoalsCount() {
+    return goals.length;
+  }
 
   float[] getGoalsVenue(String venue) {
     // create empty venue_goals array

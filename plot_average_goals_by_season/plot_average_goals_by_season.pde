@@ -1,96 +1,35 @@
+Bar bar;
+
+int zone_width = 60;
+
 void setup() {
-  size(700, 500);
-  Table avg_goals_by_season = loadTable("average_goals_by_season.csv", "header");
-
-  float[] home_goals = getGoalsVenue(avg_goals_by_season, "home");
-  float[] away_goals = getGoalsVenue(avg_goals_by_season, "away");
-
-  drawGoals(home_goals, "home");
-  drawGoals(away_goals, "away");
+  size(500, 500);
+  bar = new Bar(5, 1.5, 2);
+  bar.display();
 }
 
-float[] getGoalsVenue(Table avg_goals_by_season, String venue) {
-  // get goals and venue columns
-  float[] goals = float(avg_goals_by_season.getStringColumn("goals"));
-  String[] venues = avg_goals_by_season.getStringColumn("venue");
+class Bar {
 
-  // create empty venue_goals array
-  float[] venue_goals = new float[0];
+  color c;
+  int i;
+  float avg_goals;
+  int max_goals;
+  float bar_width;
 
-  // append to venue_goals if venue matches venue requested as argument
-  for (int i = 0; i < goals.length; i++) {
-    if (venues[i].equals(venue)) {
-      venue_goals = append(venue_goals, goals[i]);
-    }
+  Bar(int _i, float _avg_goals, int _max_goals, float _bar_width, float _zone_width) {
+    rectMode(CORNERS);
+    noStroke();
+
+    c = color(255);
+
+    float x_corner_one = _i * _zone_width;
+    float y_corner_one = height * 0.9;
+
+    float x_corner_two = _i * zone_width + _bar_width;
+    float y_corner_two = height - _avg_goals * (height / _max_goals);
   }
 
-  return venue_goals;
-}
-
-void setColor(String venue) {
-  if (venue.equals("home")) {
-    fill(247, 118, 108);
-  } else if (venue.equals("away")) {
-    fill(153, 153, 153);
-  }
-}
-
-float getBarWidth(float[] goals) {
-  return width / (goals.length * 3);
-}
-
-float getZoneWidth(float bar_width) {
-  return 3 * bar_width;
-}
-
-float getXCornerOne(int bar_index, float zone_width, String venue, float bar_width) {
-  float x_corner_one = bar_index * zone_width;
-
-  if (venue.equals("home")) {
-    // home bars are displayed to the right of away bars
-    x_corner_one += bar_width;
-  }
-
-  return x_corner_one;
-}
-
-float getXCornerTwo(int bar_index, float zone_width, float bar_width, String venue) {
-  float x_corner_two = bar_index * zone_width + bar_width;
-
-  if (venue.equals("home")) {
-    // home bars are displayed to the right of away bars
-    x_corner_two += bar_width;
-  }
-
-  return x_corner_two;
-}
-
-float getYCornerOne(float y_margin) {
-  return height * (1 - y_margin);
-}
-
-float getYCornerTwo(int bar_index, float[] goals) {
-  return height - goals[bar_index] * (height / ceil(max(goals)));
-}
-
-void drawGoals(float[] goals, String venue) {
-  // define as 2 corners instead of corner + width/height
-  rectMode(CORNERS);
-  setColor(venue); 
-  noStroke();
-
-  // calculate variables needed for calculation corners
-  float bar_width = getBarWidth(goals);
-  float zone_width = getZoneWidth(bar_width);
-  float y_margin = 0.1;
-
-  // plot bars
-  for (int i = 0; i < goals.length; i++) {
-    float x_corner_one = getXCornerOne(i, zone_width, venue, bar_width);
-    float y_corner_one = getYCornerOne(y_margin);
-    float x_corner_two = getXCornerTwo(i, zone_width, bar_width, venue);
-    float y_corner_two = getYCornerTwo(i, goals);
-
+  void display() {
     rect(x_corner_one, 
       y_corner_one, 
       x_corner_two, 

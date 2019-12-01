@@ -6,7 +6,7 @@ class Zone {
     goals.load();
     goals.parseCols();
     
-    zone_width = floor(width / _goals.getGoalsCount());
+    zone_width = floor(width / _goals.getVenueGoalsCount());
     bar_width = zone_width / 3;
   }
 }

@@ -17,8 +17,8 @@ class Goals {
     venues = goals_file.getStringColumn("venue");
   }
   
-  int getGoalsCount() {
-    return goals.length;
+  int getVenueGoalsCount() {
+    return goals.length / 2;
   }
 
   float[] getGoalsVenue(String venue) {

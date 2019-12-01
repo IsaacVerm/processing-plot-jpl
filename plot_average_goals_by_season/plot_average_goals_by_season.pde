@@ -19,9 +19,9 @@ void setup() {
   // draw bars
   for (int i = 0; i < home_goals.length; i++) {
     // length home_goals is the same as away_goals so we can pick whichever one we like
-    home_goals_bar = new HomeGoalsBar(i, home_goals[i], max(home_goals), bar_width, zone_width);
+    home_goals_bar = new HomeGoalsBar(i, home_goals[i], max(home_goals), goals);
     home_goals_bar.display();
-    away_goals_bar = new AwayGoalsBar(i, away_goals[i], max(away_goals), bar_width, zone_width);
+    away_goals_bar = new AwayGoalsBar(i, away_goals[i], max(away_goals), goals);
     away_goals_bar.display();
   }
 }

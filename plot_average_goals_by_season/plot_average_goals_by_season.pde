@@ -47,6 +47,18 @@ float getXCornerOne(int bar_index, float zone_width) {
   return bar_index * zone_width;
 }
 
+float getXCornerTwo(int bar_index, float zone_width, float bar_width) {
+  return bar_index * zone_width + bar_width;
+}
+
+float getYCornerOne(float y_margin) {
+  return height * (1 - y_margin);
+}
+
+float getYCornerTwo(int bar_index, float[] goals) {
+  return height - goals[bar_index] * (height / ceil(max(goals)));
+}
+
 void drawGoals(float[] goals, String venue) {
   // define as 2 corners instead of corner + width/height
   rectMode(CORNERS);
@@ -56,15 +68,14 @@ void drawGoals(float[] goals, String venue) {
   // calculate variables needed for calculation corners
   float bar_width = getBarWidth(goals);
   float zone_width = getZoneWidth(bar_width);
-  float max_goals = max(goals);
   float y_margin = 0.1;
 
   // plot bars
   for (int i = 0; i < goals.length; i++) {
     float x_corner_one = getXCornerOne(i, zone_width);
-    float y_corner_one = height * (1 - y_margin);
-    float x_corner_two = i * zone_width + bar_width;
-    float y_corner_two = height - goals[i] * (height / ceil(max_goals));
+    float y_corner_one = getYCornerOne(y_margin);
+    float x_corner_two = getXCornerTwo(i, zone_width, bar_width);
+    float y_corner_two = getYCornerTwo(i, goals);
 
     if (venue.equals("away")) {
       rect(x_corner_one, 

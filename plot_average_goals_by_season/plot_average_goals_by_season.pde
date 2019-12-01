@@ -1,16 +1,24 @@
 HomeGoalsBar home_goals_bar;
 AwayGoalsBar away_goals_bar;
+Goals goals;
 
 int zone_width = 60;
 
 void setup() {
   size(700, 500);
-  Table avg_goals_by_season = loadTable("average_goals_by_season.csv", "header");
+  
+  // get data
+  goals = new Goals("average_goals_by_season.csv");
+  goals.load();
+  goals.parseCols();
 
-  float[] home_goals = getGoalsVenue(avg_goals_by_season, "home");
-  float[] away_goals = getGoalsVenue(avg_goals_by_season, "away");
+  // filter data
+  float[] home_goals = goals.getGoalsVenue("home");
+  float[] away_goals = goals.getGoalsVenue("away");
 
+  // draw bars
   for (int i = 0; i < home_goals.length; i++) {
+    // length home_goals is the same as away_goals so we can pick whichever one we like
     home_goals_bar = new HomeGoalsBar(i, home_goals[i], max(home_goals), 10, 30);
     home_goals_bar.display();
     away_goals_bar = new AwayGoalsBar(i, away_goals[i], max(away_goals), 10, 30);
@@ -18,22 +26,38 @@ void setup() {
   }
 }
 
-float[] getGoalsVenue(Table avg_goals_by_season, String venue) {
-  // get goals and venue columns
-  float[] goals = float(avg_goals_by_season.getStringColumn("goals"));
-  String[] venues = avg_goals_by_season.getStringColumn("venue");
+class Goals {
+  Table goals_file;
+  float[] goals;
+  String[] venues;
+  String filename;
 
-  // create empty venue_goals array
-  float[] venue_goals = new float[0];
-
-  // append to venue_goals if venue matches venue requested as argument
-  for (int i = 0; i < goals.length; i++) {
-    if (venues[i].equals(venue)) {
-      venue_goals = append(venue_goals, goals[i]);
-    }
+  Goals(String _filename) {
+    filename = _filename;
   }
 
-  return venue_goals;
+  void load() {
+    goals_file = loadTable(filename, "header");
+  }
+
+  void parseCols() {
+    goals = float(goals_file.getStringColumn("goals"));
+    venues = goals_file.getStringColumn("venue");
+  }
+
+  float[] getGoalsVenue(String venue) {
+    // create empty venue_goals array
+    float[] venue_goals = new float[0];
+
+    // append to venue_goals if venue matches venue requested as argument
+    for (int i = 0; i < goals.length; i++) {
+      if (venues[i].equals(venue)) {
+        venue_goals = append(venue_goals, goals[i]);
+      }
+    }
+
+    return venue_goals;
+  }
 }
 
 class GoalsBar {
@@ -63,7 +87,7 @@ class HomeGoalsBar extends GoalsBar {
     // color depends on venue
     fill(247, 118, 108);
   }
-  
+
   void display() {
     rect(x_corner_one, 
       y_corner_one, 
@@ -87,7 +111,7 @@ class AwayGoalsBar extends GoalsBar {
     // color depends on venue
     fill(153, 153, 153);
   }
-  
+
   void display() {
     rect(x_corner_one, 
       y_corner_one, 

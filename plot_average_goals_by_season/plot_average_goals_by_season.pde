@@ -1,16 +1,21 @@
 HomeGoalsBar home_goals_bar;
 AwayGoalsBar away_goals_bar;
 Goals goals;
+Zone zone;
 
 void setup() {
-  size(700, 500);
-  int bar_width = 10;
-  int zone_width = 30;
+  size(1200, 500);
   
-  // get data
+  // goals
   goals = new Goals("average_goals_by_season.csv");
   goals.load();
   goals.parseCols();
+  
+  // zone
+  // a zone contains the bars for home goals, away goals and an empty margin
+  // so the number of zones is equal to the number of seasons with home goals
+  int zones_count = goals.getVenueGoalsCount();
+  zone = new Zone(zones_count);
 
   // filter data
   float[] home_goals = goals.getGoalsVenue("home");

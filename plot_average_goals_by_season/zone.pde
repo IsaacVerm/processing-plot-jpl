@@ -2,11 +2,8 @@ class Zone {
   float zone_width;
   float bar_width;
   
-  Zone(Goals _goals) {
-    goals.load();
-    goals.parseCols();
-    
-    zone_width = floor(width / _goals.getVenueGoalsCount());
+  Zone(int zones_count) {
+    zone_width = floor(width / zones_count);
     bar_width = zone_width / 3;
   }
 }

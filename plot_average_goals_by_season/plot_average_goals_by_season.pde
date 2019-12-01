@@ -2,10 +2,10 @@ HomeGoalsBar home_goals_bar;
 AwayGoalsBar away_goals_bar;
 Goals goals;
 
-int zone_width = 60;
-
 void setup() {
   size(700, 500);
+  int bar_width = 10;
+  int zone_width = 30;
   
   // get data
   goals = new Goals("average_goals_by_season.csv");
@@ -19,44 +19,10 @@ void setup() {
   // draw bars
   for (int i = 0; i < home_goals.length; i++) {
     // length home_goals is the same as away_goals so we can pick whichever one we like
-    home_goals_bar = new HomeGoalsBar(i, home_goals[i], max(home_goals), 10, 30);
+    home_goals_bar = new HomeGoalsBar(i, home_goals[i], max(home_goals), bar_width, zone_width);
     home_goals_bar.display();
-    away_goals_bar = new AwayGoalsBar(i, away_goals[i], max(away_goals), 10, 30);
+    away_goals_bar = new AwayGoalsBar(i, away_goals[i], max(away_goals), bar_width, zone_width);
     away_goals_bar.display();
-  }
-}
-
-class Goals {
-  Table goals_file;
-  float[] goals;
-  String[] venues;
-  String filename;
-
-  Goals(String _filename) {
-    filename = _filename;
-  }
-
-  void load() {
-    goals_file = loadTable(filename, "header");
-  }
-
-  void parseCols() {
-    goals = float(goals_file.getStringColumn("goals"));
-    venues = goals_file.getStringColumn("venue");
-  }
-
-  float[] getGoalsVenue(String venue) {
-    // create empty venue_goals array
-    float[] venue_goals = new float[0];
-
-    // append to venue_goals if venue matches venue requested as argument
-    for (int i = 0; i < goals.length; i++) {
-      if (venues[i].equals(venue)) {
-        venue_goals = append(venue_goals, goals[i]);
-      }
-    }
-
-    return venue_goals;
   }
 }
 

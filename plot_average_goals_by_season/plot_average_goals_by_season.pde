@@ -43,12 +43,26 @@ float getZoneWidth(float bar_width) {
   return 3 * bar_width;
 }
 
-float getXCornerOne(int bar_index, float zone_width) {
-  return bar_index * zone_width;
+float getXCornerOne(int bar_index, float zone_width, String venue, float bar_width) {
+  float x_corner_one = bar_index * zone_width;
+
+  if (venue.equals("home")) {
+    // home bars are displayed to the right of away bars
+    x_corner_one += bar_width;
+  }
+
+  return x_corner_one;
 }
 
-float getXCornerTwo(int bar_index, float zone_width, float bar_width) {
-  return bar_index * zone_width + bar_width;
+float getXCornerTwo(int bar_index, float zone_width, float bar_width, String venue) {
+  float x_corner_two = bar_index * zone_width + bar_width;
+
+  if (venue.equals("home")) {
+    // home bars are displayed to the right of away bars
+    x_corner_two += bar_width;
+  }
+
+  return x_corner_two;
 }
 
 float getYCornerOne(float y_margin) {
@@ -72,21 +86,14 @@ void drawGoals(float[] goals, String venue) {
 
   // plot bars
   for (int i = 0; i < goals.length; i++) {
-    float x_corner_one = getXCornerOne(i, zone_width);
+    float x_corner_one = getXCornerOne(i, zone_width, venue, bar_width);
     float y_corner_one = getYCornerOne(y_margin);
-    float x_corner_two = getXCornerTwo(i, zone_width, bar_width);
+    float x_corner_two = getXCornerTwo(i, zone_width, bar_width, venue);
     float y_corner_two = getYCornerTwo(i, goals);
 
-    if (venue.equals("away")) {
-      rect(x_corner_one, 
-        y_corner_one, 
-        x_corner_two, 
-        y_corner_two);
-    } else if (venue.equals("home")) {
-      rect(x_corner_one + bar_width, 
-        y_corner_one, 
-        x_corner_two + bar_width, 
-        y_corner_two);
-    }
+    rect(x_corner_one, 
+      y_corner_one, 
+      x_corner_two, 
+      y_corner_two);
   }
 }

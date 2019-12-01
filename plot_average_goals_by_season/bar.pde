@@ -3,11 +3,11 @@ class GoalsBar {
   float y_corner_two;
   Zone zone;
 
-  GoalsBar(int _i, float _avg_goals, float _max_goals, float _zone_width, float _bar_width) {
+  GoalsBar(int _i, float _avg_goals, float _max_goals, float _zone_width, float _bar_width, float _bottom_margin) {
     rectMode(CORNERS);
     noStroke();
 
-    y_corner_one = height * 0.9;
+    y_corner_one = height * (1 - _bottom_margin);
     y_corner_two = height - _avg_goals * (height / ceil(_max_goals));
   }
 }
@@ -16,8 +16,8 @@ class HomeGoalsBar extends GoalsBar {
   float x_corner_one;
   float x_corner_two;
 
-  HomeGoalsBar(int _i, float _avg_goals, float _max_goals, float _zone_width, float _bar_width) {
-    super(_i, _avg_goals, _max_goals, _zone_width, _bar_width);
+  HomeGoalsBar(int _i, float _avg_goals, float _max_goals, float _zone_width, float _bar_width, float _bottom_margin) {
+    super(_i, _avg_goals, _max_goals, _zone_width, _bar_width, _bottom_margin);
 
     // x values first and second corner depend on venue
     x_corner_one = _i * _zone_width + _bar_width;
@@ -39,8 +39,8 @@ class AwayGoalsBar extends GoalsBar {
   float x_corner_one;
   float x_corner_two;
 
-  AwayGoalsBar(int _i, float _avg_goals, float _max_goals, float _zone_width, float _bar_width) {
-    super(_i, _avg_goals, _max_goals, _zone_width, _bar_width);
+  AwayGoalsBar(int _i, float _avg_goals, float _max_goals, float _zone_width, float _bar_width, float _bottom_margin) {
+    super(_i, _avg_goals, _max_goals, _zone_width, _bar_width, _bottom_margin);
 
     // x values first and second corner depend on venue
     // home bars are displayed to the right of away bars

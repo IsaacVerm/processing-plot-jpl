@@ -2,9 +2,11 @@ HomeGoalsBar home_goals_bar;
 AwayGoalsBar away_goals_bar;
 Goals goals;
 Zone zone;
+XLabel xlabel;
 
 void setup() {
   size(1200, 500);
+  float bottom_margin = 0.3;
   
   // goals
   goals = new Goals("average_goals_by_season.csv");
@@ -17,19 +19,20 @@ void setup() {
   int zones_count = goals.getVenueGoalsCount();
   zone = new Zone(zones_count);
 
-  // filter data
+  // preprocess data
   float[] home_goals = goals.getGoalsVenue("home");
   float[] away_goals = goals.getGoalsVenue("away");
-
-  // draw bars
-  for (int i = 0; i < home_goals.length; i++) {
-    // length home_goals is the same as away_goals so we can pick whichever one we like
-    home_goals_bar = new HomeGoalsBar(i, home_goals[i], max(home_goals), zone.zone_width, zone.bar_width);
-    home_goals_bar.display();
-    away_goals_bar = new AwayGoalsBar(i, away_goals[i], max(away_goals), zone.zone_width, zone.bar_width);
-    away_goals_bar.display();
-  }
-  
   String[] seasons = goals.getUniqueSeasons();
-  print(seasons);
+
+  for (int i = 0; i < home_goals.length; i++) {
+    // draw bars
+    home_goals_bar = new HomeGoalsBar(i, home_goals[i], max(home_goals), zone.zone_width, zone.bar_width, bottom_margin);
+    home_goals_bar.display();
+    away_goals_bar = new AwayGoalsBar(i, away_goals[i], max(away_goals), zone.zone_width, zone.bar_width, bottom_margin);
+    away_goals_bar.display();
+    
+    // draw x labels
+    xlabel = new XLabel(seasons[i], away_goals_bar.x_corner_one, 400);
+    xlabel.display();
+  }
 }
